@@ -1,0 +1,7 @@
+# this udev file should be used with udev 188 and newer
+ACTION!="add|change", GOTO="bl1nky_end"
+
+# Bl1nky
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="f600", ATTRS{product}=="Bl1nky", MODE="0660", TAG+="uaccess"
+
+LABEL="bl1nky_end"

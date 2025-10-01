@@ -1,0 +1,26 @@
+# General temp files
+*.DS_Store
+*.swp
+*.lck
+*.autosave
+*~
+
+# Vscode
+.vscode/settings.json
+
+# GNU/Make
+*/*.s
+
+# SDCC
+*.adb
+*.hex
+*.lst
+*.map
+*.asm
+*.ihx
+*.lk
+*.mem
+*.rel
+*.rst
+*.sym
+*.bin
