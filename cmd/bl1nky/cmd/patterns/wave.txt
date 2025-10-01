@@ -1,0 +1,20 @@
+# Wave pattern - smooth wave effect
+repeat 5
+set 0b0001
+wait 150ms
+set 0b0011
+wait 150ms
+set 0b0111
+wait 150ms
+set 0b1111
+wait 150ms
+set 0b1110
+wait 150ms
+set 0b1100
+wait 150ms
+set 0b1000
+wait 150ms
+set 0b0000
+wait 150ms
+end
+

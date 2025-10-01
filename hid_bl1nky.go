@@ -11,7 +11,7 @@ const (
 	cmdGetLEDState = 0x02
 )
 
-var _ Bl1nky = (*HIDBl1nky)(nil)
+var _ Blinker = (*HIDBl1nky)(nil)
 
 type HIDBl1nky struct {
 	dev *HIDDevice
@@ -25,6 +25,10 @@ func NewHIDBl1nky(opts ...Option) (*HIDBl1nky, error) {
 			h.dev = v.dev
 
 		case optDeviceSerial:
+			if len(v.serial) == 0 {
+				break
+			}
+
 			devs, err := HIDEnumerate(func(d *usbhid.Device) bool {
 				return d.SerialNumber() == v.serial
 			})

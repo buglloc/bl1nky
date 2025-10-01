@@ -1,0 +1,12 @@
+# Loop pattern - LEDs light up one by one
+repeat 5
+set 0b0001
+wait 200ms
+set 0b0010
+wait 200ms
+set 0b0100
+wait 200ms
+set 0b1000
+wait 200ms
+end
+

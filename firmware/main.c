@@ -38,14 +38,14 @@ int main(void)
           // Host wants to set LED state
           led_state = data;
 
-          // Map each bit to an LED
-          // Bit 0 -> LED 0
-          // Bit 1 -> LED 1
-          // Bit 2 -> LED 2
-          // Bit 3 -> unused (only 3 LEDs available)
-          leds_set(0, led_state & 0x01);
-          leds_set(1, (led_state >> 1) & 0x01);
-          leds_set(2, (led_state >> 2) & 0x01);
+          // Map each bit to an LED (left-to-right notation: 0b[LED1][LED2][LED3][unused])
+          // Bit 3 (leftmost) -> LED 0 (LED 1 in documentation)
+          // Bit 2 -> LED 1 (LED 2 in documentation)
+          // Bit 1 -> LED 2 (LED 3 in documentation)
+          // Bit 0 -> unused
+          leds_set(0, (led_state >> 3) & 0x01);
+          leds_set(1, (led_state >> 2) & 0x01);
+          leds_set(2, (led_state >> 1) & 0x01);
           break;
 
         case CMD_GET_LED_STATE:

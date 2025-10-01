@@ -1,6 +1,6 @@
 package bl1nky
 
-var _ Bl1nky = (*NopBl1nky)(nil)
+var _ Blinker = (*NopBl1nky)(nil)
 
 type NopBl1nky struct{}
 
