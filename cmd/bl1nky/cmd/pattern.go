@@ -17,7 +17,7 @@ var patternCmd = &cobra.Command{
 	Long: `Perform LED pattern animations.
 Each line can contain:
   - Set LED state: set 0b1011 (turns on LEDs 1, 2, and 4)
-  - Wait command: wait 100ms, sleep 1s, delay 500ms
+  - Wait command: wait 100ms, wait 1s
   - Repeat block: repeat 3 ... end (repeats commands 3 times)
 
 The target argument can be:

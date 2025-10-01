@@ -6,7 +6,7 @@ import (
 	"github.com/buglloc/bl1nky"
 )
 
-func ExampleBl1nky() {
+func ExampleNewHIDBl1nky() {
 	h, err := bl1nky.NewHIDBl1nky()
 	if err != nil {
 		log.Fatalf("create bl1nky: %v\n", err)
