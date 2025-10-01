@@ -1,16 +1,15 @@
 # Bounce pattern - LED bounces back and forth
 repeat 5
-set 0b0001
-wait 100ms
-set 0b0010
-wait 100ms
-set 0b0100
-wait 100ms
-set 0b1000
-wait 100ms
-set 0b0100
-wait 100ms
-set 0b0010
-wait 100ms
+    set 0b0001
+    wait 100ms
+    set 0b0010
+    wait 100ms
+    set 0b0100
+    wait 100ms
+    set 0b1000
+    wait 100ms
+    set 0b0100
+    wait 100ms
+    set 0b0010
+    wait 100ms
 end
-

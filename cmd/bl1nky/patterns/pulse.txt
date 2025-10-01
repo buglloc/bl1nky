@@ -1,12 +1,11 @@
 # Pulse pattern - LEDs pulse from center outward
 repeat 10
-set 0b0110
-wait 100ms
-set 0b1111
-wait 200ms
-set 0b0110
-wait 100ms
-set 0b0000
-wait 200ms
+    set 0b0110
+    wait 100ms
+    set 0b1111
+    wait 200ms
+    set 0b0110
+    wait 100ms
+    set 0b0000
+    wait 200ms
 end
-

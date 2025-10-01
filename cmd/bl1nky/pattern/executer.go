@@ -90,11 +90,11 @@ func execute(blinker bl1nky.Blinker, commands []execCommand) error {
 func findMatchingEnd(commands []execCommand, startIdx int) int {
 	depth := 1
 	for i := startIdx + 1; i < len(commands); i++ {
-		switch commands[i].Command.(type) {
-		case *RepeatCommand:
+		switch commands[i].Type() {
+		case CommandTypeRepeat:
 			depth++
 
-		case *EndCommand:
+		case CommandTypeEnd:
 			depth--
 			if depth == 0 {
 				return i

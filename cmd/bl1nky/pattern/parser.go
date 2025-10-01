@@ -10,14 +10,14 @@ import (
 	"github.com/buglloc/bl1nky"
 )
 
-type CommandType int
+type CommandType string
 
 const (
-	CommandUnknown CommandType = iota
-	CommandSet
-	CommandWait
-	CommandRepeat
-	CommandEnd
+	CommandTypeUnknown CommandType = "unknown"
+	CommandTypeSet     CommandType = "set"
+	CommandTypeWait    CommandType = "wait"
+	CommandTypeRepeat  CommandType = "repeat"
+	CommandTypeEnd     CommandType = "end"
 )
 
 type Command interface {
@@ -29,11 +29,11 @@ type SetCommand struct {
 }
 
 func (c *SetCommand) Type() CommandType {
-	return CommandSet
+	return CommandTypeSet
 }
 
 func (c *SetCommand) String() string {
-	return fmt.Sprintf("set 0b%04b", c.State)
+	return fmt.Sprintf("%s 0b%04b", c.Type(), c.State)
 }
 
 type WaitCommand struct {
@@ -41,11 +41,11 @@ type WaitCommand struct {
 }
 
 func (c *WaitCommand) Type() CommandType {
-	return CommandWait
+	return CommandTypeWait
 }
 
 func (c *WaitCommand) String() string {
-	return fmt.Sprintf("wait %s", c.Duration)
+	return fmt.Sprintf("%s %s", c.Type(), c.Duration)
 }
 
 type RepeatCommand struct {
@@ -53,21 +53,21 @@ type RepeatCommand struct {
 }
 
 func (c *RepeatCommand) Type() CommandType {
-	return CommandRepeat
+	return CommandTypeRepeat
 }
 
 func (c *RepeatCommand) String() string {
-	return fmt.Sprintf("repeat %d", c.Count)
+	return fmt.Sprintf("%s %d", c.Type(), c.Count)
 }
 
 type EndCommand struct{}
 
 func (c *EndCommand) Type() CommandType {
-	return CommandEnd
+	return CommandTypeEnd
 }
 
 func (c *EndCommand) String() string {
-	return "end"
+	return string(c.Type())
 }
 
 // ParseCommand parses a command line and returns the appropriate Command type
@@ -77,17 +77,17 @@ func ParseCommand(line string) (Command, error) {
 		return nil, errors.New("empty command")
 	}
 
-	switch strings.ToLower(fields[0]) {
-	case "set":
+	switch CommandType(strings.ToLower(fields[0])) {
+	case CommandTypeSet:
 		return parseSetCommand(fields)
 
-	case "wait", "delay":
+	case CommandTypeWait:
 		return parseWaitCommand(fields)
 
-	case "repeat":
+	case CommandTypeRepeat:
 		return parseRepeatCommand(fields)
 
-	case "end":
+	case CommandTypeEnd:
 		return &EndCommand{}, nil
 
 	default:
