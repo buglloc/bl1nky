@@ -1,0 +1,36 @@
+# Binary counter pattern - count from 0 to 15
+repeat 3
+set 0b0000
+wait 200ms
+set 0b0001
+wait 200ms
+set 0b0010
+wait 200ms
+set 0b0011
+wait 200ms
+set 0b0100
+wait 200ms
+set 0b0101
+wait 200ms
+set 0b0110
+wait 200ms
+set 0b0111
+wait 200ms
+set 0b1000
+wait 200ms
+set 0b1001
+wait 200ms
+set 0b1010
+wait 200ms
+set 0b1011
+wait 200ms
+set 0b1100
+wait 200ms
+set 0b1101
+wait 200ms
+set 0b1110
+wait 200ms
+set 0b1111
+wait 200ms
+end
+

@@ -1,19 +1,15 @@
 package cmd
 
 import (
-	"embed"
 	"fmt"
 	"io"
-	"io/fs"
 	"os"
 
 	"github.com/spf13/cobra"
 
 	"github.com/buglloc/bl1nky/cmd/bl1nky/pattern"
+	"github.com/buglloc/bl1nky/cmd/bl1nky/patterns"
 )
-
-//go:embed patterns/*.txt
-var embeddedPatterns embed.FS
 
 var patternCmd = &cobra.Command{
 	Use:   "pattern [file]",
@@ -76,12 +72,7 @@ func choosePattern(in string) (io.Reader, func() error, error) {
 		return f, f.Close, nil
 	}
 
-	patternPath := fmt.Sprintf("patterns/%s.txt", in)
-	if _, err := fs.Stat(embeddedPatterns, patternPath); err == nil {
-		f, err := embeddedPatterns.Open(patternPath)
-		if err != nil {
-			return nil, nil, fmt.Errorf("open embedded pattern: %w", err)
-		}
+	if f, err := patterns.Open(in); err == nil {
 		return f, f.Close, nil
 	}
 
