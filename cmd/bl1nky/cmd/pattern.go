@@ -12,15 +12,15 @@ import (
 )
 
 var patternCmd = &cobra.Command{
-	Use:   "pattern [file]",
-	Short: "Perform LED pattern animations from file or stdin",
-	Long: `Perform LED pattern animations by reading pattern from file or stdin.
+	Use:   "pattern [target]",
+	Short: "Perform LED pattern animations",
+	Long: `Perform LED pattern animations.
 Each line can contain:
   - Set LED state: set 0b1011 (turns on LEDs 1, 2, and 4)
   - Wait command: wait 100ms, sleep 1s, delay 500ms
   - Repeat block: repeat 3 ... end (repeats commands 3 times)
 
-The file argument can be:
+The target argument can be:
   - "-" for stdin (default if no argument provided)
   - A path to a pattern file
   - A predefined pattern name (blink, loop, wave, bounce, chase, pulse, binary)
@@ -37,17 +37,14 @@ Examples:
 		}
 		defer func() { _ = blinker.Close() }()
 
-		var reader io.Reader
-		var closer func() error
+		patternName := "-"
+		if len(args) > 0 {
+			patternName = args[0]
+		}
 
-		if len(args) == 0 {
-			reader = os.Stdin
-		} else {
-			var err error
-			reader, closer, err = choosePattern(args[0])
-			if err != nil {
-				return fmt.Errorf("choose pattern: %w", err)
-			}
+		reader, closer, err := choosePattern(patternName)
+		if err != nil {
+			return fmt.Errorf("choose pattern: %w", err)
 		}
 
 		if closer != nil {
