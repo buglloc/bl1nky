@@ -11,6 +11,10 @@ import (
 	"github.com/buglloc/bl1nky/cmd/bl1nky/patterns"
 )
 
+var patternArgs struct {
+	quiet bool
+}
+
 var patternCmd = &cobra.Command{
 	Use:   "pattern [target]",
 	Short: "Perform LED pattern animations",
@@ -51,7 +55,18 @@ Examples:
 			defer func() { _ = closer() }()
 		}
 
-		return pattern.Execute(blinker, reader)
+		opts := []pattern.ExecutorOption{
+			pattern.WithBlinker(blinker),
+		}
+
+		if !patternArgs.quiet {
+			opts = append(opts, pattern.WithTracer(func(line int, cmd pattern.Command) {
+				fmt.Printf("#%d %s\n", line, cmd)
+			}))
+		}
+
+		executor := pattern.NewExecutor(opts...)
+		return executor.Execute(reader)
 	},
 }
 
@@ -74,4 +89,8 @@ func choosePattern(in string) (io.Reader, func() error, error) {
 	}
 
 	return nil, nil, fmt.Errorf("pattern not found: %q (not a file, and no embedded pattern)", in)
+}
+
+func init() {
+	patternCmd.Flags().BoolVar(&patternArgs.quiet, "quiet", false, "disable command logging")
 }

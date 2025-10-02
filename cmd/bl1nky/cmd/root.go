@@ -15,8 +15,9 @@ var rootArgs struct {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "bl1nky",
-	Short: "YaCTF2025 badge LED controller",
+	Use:          "bl1nky",
+	Short:        "YaCTF2025 badge LED controller",
+	SilenceUsage: true,
 	PersistentPreRunE: func(_ *cobra.Command, _ []string) error {
 		var err error
 		blinker, err = bl1nky.NewHIDBl1nky(

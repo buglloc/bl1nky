@@ -15,7 +15,24 @@ type execCommand struct {
 	lineNum int
 }
 
-func Execute(blinker bl1nky.Blinker, reader io.Reader) error {
+type Executor struct {
+	blinker bl1nky.Blinker
+	tracer  ExecutorTracer
+}
+
+func NewExecutor(opts ...ExecutorOption) *Executor {
+	e := &Executor{
+		blinker: bl1nky.NewNopBl1nky(),
+		tracer:  func(_ int, _ Command) {},
+	}
+
+	for _, opt := range opts {
+		opt(e)
+	}
+	return e
+}
+
+func (e *Executor) Execute(reader io.Reader) error {
 	scanner := bufio.NewScanner(reader)
 	lineNum := 0
 
@@ -44,16 +61,17 @@ func Execute(blinker bl1nky.Blinker, reader io.Reader) error {
 		return fmt.Errorf("read input: %w", err)
 	}
 
-	return execute(blinker, commands)
+	return e.execute(commands)
 }
 
-func execute(blinker bl1nky.Blinker, commands []execCommand) error {
+func (e *Executor) execute(commands []execCommand) error {
 	for i := 0; i < len(commands); i++ {
 		parsed := commands[i]
 
+		e.tracer(parsed.lineNum, parsed.Command)
 		switch c := parsed.Command.(type) {
 		case *SetCommand:
-			if err := blinker.SetLEDs(c.State); err != nil {
+			if err := e.blinker.SetLEDs(c.State); err != nil {
 				return fmt.Errorf("line %d: set LEDs: %w", parsed.lineNum, err)
 			}
 
@@ -68,7 +86,7 @@ func execute(blinker bl1nky.Blinker, commands []execCommand) error {
 
 			repeatBlock := commands[i+1 : endIdx]
 			for j := 0; j < c.Count; j++ {
-				if err := execute(blinker, repeatBlock); err != nil {
+				if err := e.execute(repeatBlock); err != nil {
 					return err
 				}
 			}
