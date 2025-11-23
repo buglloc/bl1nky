@@ -21,7 +21,8 @@ int main(void)
 
   board_init();
   leds_init();
-  leds_off();
+  // turn on by default
+  leds_on();
   usb_hid_init();
 
   while (1) {
