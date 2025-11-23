@@ -1,11 +1,9 @@
 # Loop pattern - LEDs light up one by one
 repeat 5
-    set 0b0001
+    set 0b001
     wait 200ms
-    set 0b0010
+    set 0b010
     wait 200ms
-    set 0b0100
-    wait 200ms
-    set 0b1000
+    set 0b100
     wait 200ms
 end

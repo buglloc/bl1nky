@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/buglloc/bl1nky"
 	"github.com/spf13/cobra"
+
+	"github.com/buglloc/bl1nky"
 )
 
 var blinker bl1nky.Blinker

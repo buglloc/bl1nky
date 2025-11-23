@@ -5,11 +5,11 @@
 #define LED2_BIT 0x05
 #define LED_COUNT 3
 
-// P3.0
+// P3.0 (C)
 SBIT(led_0, 0xB0, LED0_BIT);
-// P3.1
+// P3.1 (T)
 SBIT(led_1, 0xB0, LED1_BIT);
-// P1.5
+// P1.5 (F)
 SBIT(led_2, 0x90, LED2_BIT);
 
 

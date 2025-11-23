@@ -33,7 +33,7 @@ func (c *SetCommand) Type() CommandType {
 }
 
 func (c *SetCommand) String() string {
-	return fmt.Sprintf("%s 0b%04b", c.Type(), c.State)
+	return fmt.Sprintf("%s 0b%03b", c.Type(), c.State)
 }
 
 type WaitCommand struct {

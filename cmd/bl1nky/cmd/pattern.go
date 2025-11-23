@@ -20,7 +20,7 @@ var patternCmd = &cobra.Command{
 	Short: "Perform LED pattern animations",
 	Long: `Perform LED pattern animations.
 Each line can contain:
-  - Set LED state: set 0b1011 (turns on LEDs 1, 2, and 4)
+  - Set LED state: set 0b101 (turns on LEDs C and F)
   - Wait command: wait 100ms, wait 1s
   - Repeat block: repeat 3 ... end (repeats commands 3 times)
 
@@ -33,8 +33,8 @@ Examples:
   bl1nky pattern blink          # Use predefined pattern
   bl1nky pattern loop           # Use predefined pattern
   bl1nky pattern pattern.txt    # Use custom file
-  echo -e "set 0b1111\nwait 500ms" | bl1nky pattern
-  echo -e "set 0b1111\nwait 500ms" | bl1nky pattern -`,
+  echo -e "set 0b111\nwait 500ms" | bl1nky pattern
+  echo -e "set 0b101\nwait 500ms" | bl1nky pattern -`,
 	RunE: func(_ *cobra.Command, args []string) error {
 		if err := blinker.Open(); err != nil {
 			return fmt.Errorf("open blinker: %w", err)

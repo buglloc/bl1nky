@@ -17,8 +17,8 @@ func ExampleNewHIDBl1nky() {
 	}
 	defer h.Close()
 
-	// Turn on LED 1 and LED 2
-	err = h.SetLEDs(bl1nky.Led1 | bl1nky.Led2)
+	// Turn on LED C and LED F
+	err = h.SetLEDs(bl1nky.LedC | bl1nky.LedF)
 	if err != nil {
 		log.Fatalf("set LEDs: %v\n", err)
 	}

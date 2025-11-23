@@ -8,16 +8,15 @@ import (
 type LedSet byte
 
 const (
-	Led1 = 1 << (3 - iota)
-	Led2
-	Led3
-	Led4
+	LedC = 1 << (3 - iota)
+	LedT
+	LedF
 )
 
 func (l LedSet) String() string {
-	states := make([]string, 4)
-	for i := 0; i < 4; i++ {
-		if l&(1<<(3-i)) != 0 {
+	states := make([]string, 3)
+	for i := 0; i < 3; i++ {
+		if l&(1<<(2-i)) != 0 {
 			states[i] = "on"
 		} else {
 			states[i] = "off"

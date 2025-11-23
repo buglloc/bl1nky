@@ -1,19 +1,15 @@
 # Wave pattern - smooth wave effect
 repeat 5
-    set 0b0001
+    set 0b001
     wait 150ms
-    set 0b0011
+    set 0b011
     wait 150ms
-    set 0b0111
+    set 0b111
     wait 150ms
-    set 0b1111
+    set 0b110
     wait 150ms
-    set 0b1110
+    set 0b100
     wait 150ms
-    set 0b1100
-    wait 150ms
-    set 0b1000
-    wait 150ms
-    set 0b0000
+    set 0b000
     wait 150ms
 end

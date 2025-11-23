@@ -1,7 +1,7 @@
 # Simple blink pattern - all LEDs on/off
 repeat 5
-    set 0b1111
+    set 0b111
     wait 500ms
-    set 0b0000
+    set 0b000
     wait 500ms
 end
