@@ -4,7 +4,7 @@ A LED controller for the YaCTF2025 badge, featuring a Go library, CLI tool, and 
 
 ## Overview
 
-`bl1nky` provides USB HID-based control for the 4 LEDs on the YaCTF2025 badge. The project includes:
+`bl1nky` provides USB HID-based control for the 3 LEDs on the YaCTF2025 badge. The project includes:
 
 - **Go Library**: Full-featured library for LED control via USB HID
 - **CLI Tool**: Command-line interface for LED operations and pattern animations
@@ -57,7 +57,7 @@ bl1nky get
 bl1nky get --binary
 ```
 
-The LED state is represented in left-to-right order: `0b[LED1][LED2][LED3][LED4]`
+The LED state is represented in left-to-right order: `0b[LED1][LED2][LED3]`
 - `1` = LED is on
 - `0` = LED is off
 
@@ -67,16 +67,16 @@ Set the state of all LEDs using binary notation:
 
 ```bash
 # Turn on all LEDs
-bl1nky set --state 0b1111
+bl1nky set --state 0b111
 
 # Turn on only LED 1 and LED 3
-bl1nky set --state 0b1010
+bl1nky set --state 0b101
 
 # Turn off all LEDs
-bl1nky set --state 0b0000
+bl1nky set --state 0b000
 
-# Turn on only LED 1 and LED 4 (0b prefix is optional)
-bl1nky set --state 1001
+# Turn on only LED 1 and LED 2 (0b prefix is optional)
+bl1nky set --state 110
 ```
 
 ### Pattern Animations
@@ -87,7 +87,6 @@ Execute LED patterns with timing control:
 # Use predefined patterns
 bl1nky pattern blink
 bl1nky pattern wave
-bl1nky pattern chase
 bl1nky pattern pulse
 bl1nky pattern bounce
 bl1nky pattern loop
@@ -96,14 +95,14 @@ bl1nky pattern loop
 bl1nky pattern mypattern.txt
 
 # Use pattern from stdin
-echo -e "set 0b1111\nwait 500ms\nset 0b0000\nwait 500ms" | bl1nky pattern
+echo -e "set 0b111\nwait 500ms\nset 0b000\nwait 500ms" | bl1nky pattern
 ```
 
 ### Pattern Language
 
 Pattern files support the following commands:
 
-- **Set LED state**: `set 0b1011` (turns on LEDs 1, 2, and 4)
+- **Set LED state**: `set 0b101` (turns on LEDs 1 and 3)
 - **Wait commands**: `wait 100ms`
 - **Repeat blocks**: `repeat 3 ... end` (repeats commands 3 times)
 - **Comments**: Lines starting with `#` are ignored
@@ -113,9 +112,9 @@ Example pattern file:
 ```txt
 # Blink pattern
 repeat 5
-    set 0b1111
+    set 0b111
     wait 500ms
-    set 0b0000
+    set 0b000
     wait 500ms
 end
 ```
@@ -149,7 +148,7 @@ func main() {
     defer blinker.Close()
     
     // Turn on all LEDs
-    if err := blinker.SetLEDs(bl1nky.Led1 | bl1nky.Led2 | bl1nky.Led3 | bl1nky.Led4); err != nil {
+    if err := blinker.SetLEDs(bl1nky.Led1 | bl1nky.Led2 | bl1nky.Led3); err != nil {
         log.Fatalf("Failed to set LEDs: %v", err)
     }
     time.Sleep(1 * time.Second)
@@ -188,7 +187,7 @@ make flash
 ### Firmware Features
 
 - USB HID interface (VID: 0x1209, PID: 0xF600)
-- Supports 4 LEDs on the YaCTF2025 badge
+- Supports 3 LEDs on the YaCTF2025 badge
 - Commands:
   - `0x01`: Set LED state
   - `0x02`: Get LED state
@@ -196,11 +195,10 @@ make flash
 
 ### Hardware Configuration
 
-The firmware controls 4 LEDs:
-- LED 1: Controlled via bit 3 (leftmost)
-- LED 2: Controlled via bit 2
-- LED 3: Controlled via bit 1
-- LED 4: Controlled via bit 0
+The firmware controls 3 LEDs:
+- LED 1: Controlled via bit 2 (leftmost)
+- LED 2: Controlled via bit 1
+- LED 3: Controlled via bit 0
 
 ## Technical Details
 
